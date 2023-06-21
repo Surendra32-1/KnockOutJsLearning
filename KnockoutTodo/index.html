@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Todo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://code.jquery.com/jquery-3.7.0.js" integrity="sha256-JlqSTELeR4TLqP0OG9dxM7yDPqX1ox/HfgiSLBj8+kM=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<style>
+Completed{
+    text-decoration: line-through;
+}
+</style>
+</head>
+
+<body>
+   
+    <div class="container">       
+        <div class="col-md-8 offset-2 border border-success mr-6 ml-6">
+                <h5 class="text-success text-center">To Do Application</h5>
+            <form data-bind="submit: updateTask" class="p-5">
+                <div class="row">
+                 <input data-bind="value:Id" class="form-control" hidden/>  
+                 <div class="form-group col-md-5 offset-0 mr-5">
+                     <label>Title:</label>
+                     <input data-bind="value:Title" class="form-control"/>
+                 </div>
+                 <div class="form-group col-md-4 offset-2">
+                        <label>Priority:</label>
+                        <select data-bind="options:Priority , value:SelectedPriority"></select>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                        <div class="form-group col-md-8 offset-0 mr-5">
+                            <label>Description:</label>
+                            <textarea data-bind="value:Description" class="form-control"  cols=10 rows=4></textarea>
+                        </div>                      
+                </div>
+                <div class="mt-3">
+                  <div data-bind="ifnot:ShowEdit">
+
+
+                      <button data-bind="click:AddTask.bind($data) " class="btn btn-success">ADD</button>
+                  </div>
+                  <div data-bind="if:ShowEdit">
+                        <button type="submit" class="btn btn-success">UPDATE</button>
+                   
+                    </div>
+                </div>
+            </form>
+        </div>
+        </div>
+       
+        <div class="container-fluid">       
+             <div class="row border border-success mt-3">
+                 <h4 class="text-center text-primary mt-1" >ToDo List</h4>
+              <table class="table">
+                  <thead>
+                      <tr>
+                          <th>Id</th>
+                          <th>Title</th>
+                          <th>Priority</th>
+                          <th>Descriptions</th>
+                          <th>Is Completed</th>
+                          <th class="text-center">Actions</th>
+                      </tr>
+                  </thead>
+                  <tbody data-bind="foreach:allTask">
+                      <tr> 
+                            <td data-bind="text:$data.Id" class="col-md-1"></td>
+                          <td  data-bind="text:$data.Title ,css:{Completed:IsComplete}" class="col-md-2"></td>
+                          <td data-bind="text:$data.SelectedPriority " class="col-md-2"></td>
+                          <td data-bind="text:$data.Description"  class="col-md-3"></td>
+                          <td ><input  data-bind="checked: IsComplete" type="checkbox"  class="col-md-1"/></td>
+                          <td >
+                              <div  data-bind="hidden: IsComplete">
+                                   <a data-bind="click:$root.editTask " style="width:100px"  class="btn btn-primary">EDIT</a>
+                                   <a data-bind="click:$root.removeTask " style="width:100px"  class="btn btn-danger">DELETE</a>
+                              </div>
+                                    
+                          </td>
+                      </tr>
+                  </tbody>
+              </table>
+             </div>
+        </div>
+        <script src="./knockout.js"></script>
+    <script src="./todo.js"></script>
+   
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    
+      <script>
+       ko.applyBindings(new TodoVM());
+    </script>
+</body>
+  
+
+</html>
